@@ -6,42 +6,32 @@ const db = require("./connection");
 // =============================================================
 const orm = {
 
-    burgerList: function(callback) {
-        const burgers = "SELECT * FROM burgers";
+    selectAll: function(callback) {
+        const strSQL = "SELECT * FROM burgers";
 
-        db.query(burgers, function(err, result) {
+        db.query(strSQL, (err, result) => {
             if err throw new Error(err);
             callback(result);
         });
     },
 
-    devouredList: function(callback) {
-        const devoured = "select * from burgers where devoured = true";
+    findOne: function(id, callback) {
+        const strSQL = "SELECT * FROM burgers WHERE id = ?";
 
-        db.query(devoured, true, function(err, result) {
+        db.query(strSQL, id, (err, result) => {
             if err throw new Error(err);
             callback(result);
         });
     },
 
-    createBurger: function(burger, callback) {
-        const strSQL = "INSERT INTO burgers (burger_name) VALUES (?)";
+    updateOne: function(id, colName, value, callback) {
+        const strSQL = "UPDATE burgers SET ?? = ? WHERE id = ?";
 
-        db.query(strSQL, burger.name, (err, result) => {
+        db.query(strSQL, [ olName, value, id], (err, result) => {
             if err throw new Error(err);
             callback(result);
         });
-    },
-
-    updateBurger: function(burger, callback) {
-        const strSQL = "UPDATE burgers SET burger_name = ? WHERE id = ?";
-
-        db.query(strSQL, [burger.name, burger.id], (err, result) => {
-          if err throw new Error(err);
-          callback(result);
-        }):
     }
-
 };
 
 module.exports = orm;
