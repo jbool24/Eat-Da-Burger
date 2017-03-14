@@ -9,8 +9,8 @@ console.log("|");
 console.log("|-------------------------------\n");
 
 const options = {
-    host: process.env.HOST || 'localhost',
-    port: process.env.PORT || 3306,
+    host: process.env.MYSQL_HOST || 'localhost',
+    port: process.env.MYSQL_PORT || 3306,
     username: process.env.MYSQL_USER || 'developer',
     password: process.env.MYSQL_PASSWORD || null,
     database: 'burger_db'
