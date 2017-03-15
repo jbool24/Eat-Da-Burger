@@ -27,7 +27,9 @@ header, section, footer {
     text-align: center;
 }
 
-header {}
+header {
+  color: #fff;
+}
 
 section {
     flex: 2 0 auto;
