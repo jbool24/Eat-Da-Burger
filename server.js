@@ -1,10 +1,10 @@
 // Dependencies
 // =============================================================
+const path           = require('path');
 const express        = require("express");
 const bodyParser     = require("body-parser");
-const exphbs         = require("express-handlebars");
 const methodOverride = require("method-override");
-
+const exphbs         = require("express-handlebars");
 
 // Sets up the Express App
 // =============================================================
@@ -24,12 +24,25 @@ app.use(express.static("app/public"));
 app.use(methodOverride("_method"));
 
 // Template engine setup : Handlebars
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({ defaultLayout: "main", layoutsDir: "./app/views/layouts/"}));
 app.set("view engine", "handlebars");
+app.set("views", path.join(__dirname, "./app/views"))
 
 // Routes
 // =============================================================
 require("./app/controller/burger_controller.js")(app);
+require("./app/controller/htmlPages.js")(app);
+
+// ---- ERROR ROUTES -------------------------
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, "app/public/404.html"));
+});
+
+app.use((err, req, res, next) => {
+    console.log(err.stack);
+    res.status(500).sendFile(path.join(__dirname, "app/public/500.html"));
+});
+//--------------------------------------------
 
 // Starts the server to begin listening
 // =============================================================

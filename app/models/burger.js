@@ -3,9 +3,11 @@ const orm = require('../config/orm');
 const Burger = {
 
     burgerList: function(callback) {
-        orm.selectAll({}, (result) => {
-            console.log(result);
-            callback(result)
+        orm.selectAll({
+            column: 'devoured',
+            value: 'false'
+        }, (burgers) => {
+            callback(burgers);
         });
     },
 
@@ -14,7 +16,6 @@ const Burger = {
             column: 'devoured',
             value: true
         }, (burgers) => {
-            console.log(burgers)
             callback(burgers);
         });
     },
@@ -23,23 +24,22 @@ const Burger = {
         console.log(filter)
         orm.selectAll(filter, (result) => {
             callback(result);
-            console.log(result);
         });
     },
 
     createBurger: function(burgerName, callback) {
         orm.createOne(burgerName, (result) => {
-            console.log(result);
             callback(result);
         })
     },
 
     devourBurger: function(id, callback) {
-        orm.updateOne({
+        const burger = {
             id: id,
             column: 'devoured',
             value: true
-        }, (result) => callback(result));
+        };
+        orm.updateOne(burger, (result) => callback(result));
     }
 
 }

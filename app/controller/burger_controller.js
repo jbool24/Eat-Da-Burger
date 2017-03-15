@@ -27,17 +27,24 @@ module.exports = function(app) {
 
     // Add route to create new burger
     app.post("/api/burger", function(req, res) {
-        Burger.createBurger(req.body.name, (Burger) => {
-            res.json(Burger);
-        });
+        const name = req.body.burger;
+
+        if (name !== "" || name !== undefined){
+          Burger.createBurger(name, (Burger) => {
+            console.log(req.body.name);
+            res.redirect("/");
+          });
+        } else {
+          res.end();
+        }
+
     });
 
-    // Add sequelize code to delete a Burger
+    // Update burger devoured = true
     app.put("/api/burger/:id", function(req, res) {
         const id = req.params.id;
         Burger.devourBurger(id, (result) => {
-            console.log(result);
-            res.end();
+            res.json(result);
         });
     });
 };

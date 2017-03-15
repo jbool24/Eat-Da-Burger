@@ -13,7 +13,6 @@ const orm = {
 
         if (column !== undefined && value !== undefined)
             strSQL += " WHERE ?? = ?";
-
         db.query(strSQL, [column, value], (err, result) => {
             if (err)
                 throw new Error(err);
@@ -32,7 +31,7 @@ const orm = {
     },
 
     createOne: function(name, callback) {
-        const strSQL = "INSERT INTO bugers (burger_name) VALUE (?)";
+        const strSQL = "INSERT INTO burgers (burger_name) VALUE (?)";
         db.query(strSQL, name, (err, result) => {
             if (err)
                 throw new Error(err);
